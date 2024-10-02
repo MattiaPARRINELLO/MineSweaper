@@ -5,12 +5,13 @@ const gameConstants = {
         wide: 10,
         length: 10
     },
-    minesNumber: 16,
+    minesNumber: 30,
     mines: [],
     flags: [],
-    correctFlags: []
+    correctFlags: [],
+    currentFlags: 0
 }
-gridElements = []
+let gridElements = []
 
 function generateGame(position) {
     // Faire en sorte que la première case cliquée soit toujours vide ainsi que les 8 cases autour
@@ -22,8 +23,8 @@ function generateGame(position) {
         if (!gameConstants.mines.find(mine => mine.x === minePosition.x && mine.y === minePosition.y) && !(minePosition.x === position.x && minePosition.y === position.y)) {
             gameConstants.mines.push(minePosition)
         }
+        console.log(minePosition)
     }
-    console.log('Mines', gameConstants.mines)
     if (computeNumber(position) !== 0) {
         generateGame(position)
     }
@@ -40,7 +41,25 @@ function computeNumber(position) {
             }
         }
     }
-    gridElements[position.x - 1][position.y - 1].innerHTML = minesNumber
+    let showNumber = "E"
+    if (minesNumber == 0) {
+        showNumber = ""
+    } else if (minesNumber == 1) {
+        showNumber = "1️⃣"
+    } else if (minesNumber == 2) {
+        showNumber = "2️⃣"
+    } else if (minesNumber == 3) {
+        showNumber = "3️⃣"
+    } else if (minesNumber == 4) {
+        showNumber = "4️⃣"
+    } else if (minesNumber == 5) {
+        showNumber = "5️⃣"
+    } else if (minesNumber == 6) {
+        showNumber = "6️⃣"
+    } else if (minesNumber == 7) {
+        showNumber = "7️⃣"
+    }
+    gridElements[position.x - 1][position.y - 1].innerHTML = showNumber
     if (minesNumber === 0) {
         for (let i = position.x - 1; i <= position.x + 1; i++) {
             for (let j = position.y - 1; j <= position.y + 1; j++) {
@@ -73,7 +92,7 @@ function caseRightClick(position) {
                 alert('Game Over') //We display a message
                 // We display all the mines
                 gameConstants.mines.forEach(mine => {
-                    mineEl = document.getElementById(`${mine.x}-${mine.y}`)
+                    let mineEl = document.getElementById(`${mine.x}-${mine.y}`)
                     if (mineEl.innerHTML !== '🚩') {
                         mineEl.innerHTML = '💣'
                     } else {
@@ -108,6 +127,8 @@ function caseLeftClick(position) {
         if (gameConstants.mines.find(mine => mine.x === position.x && mine.y === position.y)) {
             gameConstants.correctFlags = gameConstants.correctFlags.filter(flag => flag.x !== position.x && flag.y !== position.y)
         }
+        gameConstants.currentFlags--
+
 
     } else {
         caca.innerHTML = '🚩'
@@ -115,14 +136,20 @@ function caseLeftClick(position) {
         if (gameConstants.mines.find(mine => mine.x === position.x && mine.y === position.y)) {
             gameConstants.correctFlags.push(position)
         }
+        gameConstants.currentFlags++
     }
     if (gameConstants.correctFlags.length === gameConstants.minesNumber) {
         alert('You win')
         gameStatus = false
     }
+
+    let nbFlagEl = document.getElementById("flag")
+    nbFlagEl.innerHTML = gameConstants.minesNumber - gameConstants.currentFlags
 }
 
 function createGrid(wide, length) {
+    let nbFlagEl = document.getElementById("flag")
+    nbFlagEl.innerHTML = gameConstants.minesNumber - gameConstants.currentFlags
     const grid = document.querySelector('.grid')
     grid.innerHTML = ''
     for (let i = 1; i <= wide; i++) {
