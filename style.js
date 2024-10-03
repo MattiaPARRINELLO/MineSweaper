@@ -2,10 +2,10 @@ let gameStatus = false // false = game not started, true = game started
 
 const gameConstants = {
     grid: {
-        wide: 10,
-        length: 10
+        wide: 50,
+        length: 50
     },
-    minesNumber: 30,
+    minesNumber: 150,
     mines: [],
     flags: [],
     correctFlags: [],
@@ -91,12 +91,27 @@ function caseRightClick(position) {
                 gridElements[position.x - 1][position.y - 1].classList.add('mine') //We add the mine class
                 alert('Game Over') //We display a message
                 // We display all the mines
+                // for each case in the grid
+                for (let i = 1; i <= gameConstants.grid.wide; i++) {
+                    for (let j = 1; j <= gameConstants.grid.length; j++) {
+                        let cell = document.getElementById(`${i}-${j}`)
+                        cell.classList.add('opened')
+                        cell.classList.remove('unopened')
+                        if (cell.innerHTML == "1️⃣" || cell.innerHTML == "2️⃣" || cell.innerHTML == "3️⃣" || cell.innerHTML == "4️⃣" || cell.innerHTML == "5️⃣" || cell.innerHTML == "6️⃣" || cell.innerHTML == "7️⃣") {
+                            cell.innerHTML = ""
+                        }
+                    }
+                }
+                gameConstants.flags.forEach(flag => {
+                    let flagEl = document.getElementById(`${flag.x}-${flag.y}`)
+                    flagEl.innerHTML = '🫙'
+                })
                 gameConstants.mines.forEach(mine => {
                     let mineEl = document.getElementById(`${mine.x}-${mine.y}`)
-                    if (mineEl.innerHTML !== '🚩') {
-                        mineEl.innerHTML = '💣'
+                    if (mineEl.innerHTML !== '🫙') {
+                        mineEl.innerHTML = '💥'
                     } else {
-                        mineEl.innerHTML = '🚩💣'
+                        mineEl.innerHTML = '🧱'
                     }
                 })
                 gameStatus = false //We stop the game
