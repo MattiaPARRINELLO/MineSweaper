@@ -8,6 +8,15 @@
 
 ---
 
+## 📋 Sommaire
+- [Présentation](#présentation)
+- [Fonctionnalités](#fonctionnalités)
+- [Installation](#installation)
+- [Technologies](#technologies)
+- [Auteur](#auteur)
+
+---
+
 ## 🎯 Présentation
 Le jeu du Démineur revisité en version web. Découvrez les cases sans faire exploser les mines, placez des drapeaux, et gagnez la partie !
 
@@ -22,9 +31,20 @@ Le jeu du Démineur revisité en version web. Découvrez les cases sans faire ex
 ---
 
 ## 🚀 Installation
-Ouvrez simplement index.html dans votre navigateur.
+Ouvrez simplement `index.html` dans votre navigateur.
 
 ---
 
-## 🛠️ Technologies | HTML, CSS, JavaScript |
+## 🛠️ Technologies
+
+| Technologie | Rôle |
+|-------------|------|
+| HTML5 | Structure |
+| CSS3 | Design |
+| JavaScript | Logique de jeu |
+
 ---
+
+<div align="center">
+  <sub>Fait avec ❤️ par <a href="https://github.com/MattiaPARRINELLO">MattiaPARRINELLO</a></sub>
+</div>
